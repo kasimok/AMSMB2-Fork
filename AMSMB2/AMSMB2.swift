@@ -774,6 +774,10 @@ public class SMB2Manager: NSObject, NSSecureCoding, Codable, NSCopying, CustomRe
                 // the related error, we simply open file as reparse point then use `fstat`.
                 let file = try SMB2FileHandle.open(path: path, flags: O_RDONLY | O_SYMLINK, on: context)
                 stat = try file.fstat()
+            } catch POSIXError.ENOENT {
+                let userInfo: [String: Any] = [NSFilePathErrorKey: path]
+                let e = CocoaError(.fileNoSuchFile, userInfo: userInfo)
+                throw e
             }
             switch Int32(stat.smb2_type) {
             case SMB2_TYPE_DIRECTORY:
