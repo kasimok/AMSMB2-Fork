@@ -49,6 +49,10 @@ public class SMB2Manager: NSObject, NSSecureCoding, Codable, NSCopying, CustomRe
             context?.timeout = newValue
         }
     }
+    
+    open var dialetVersion: DialectVersion? {
+        context?.version
+    }
 
     override public var debugDescription: String {
         var result = ""

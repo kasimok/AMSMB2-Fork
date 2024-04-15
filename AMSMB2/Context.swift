@@ -498,6 +498,8 @@ extension smb2_negotiate_version: Hashable {
     }
 }
 
+public typealias DialectVersion = smb2_negotiate_version
+
 extension smb2_sec {
     static let undefined = SMB2_SEC_UNDEFINED
     static let ntlmSsp = SMB2_SEC_NTLMSSP
