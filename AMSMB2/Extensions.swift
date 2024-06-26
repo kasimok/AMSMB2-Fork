@@ -225,7 +225,7 @@ extension Data {
 
 extension String {
     var canonical: String {
-        trimmingCharacters(in: .init(charactersIn: "/\\"))
+      trimmingCharacters(in: .init(charactersIn: "/\\")).precomposedStringWithCanonicalMapping
     }
 
     func fileURL(_ isDirectory: Bool = false) -> URL {

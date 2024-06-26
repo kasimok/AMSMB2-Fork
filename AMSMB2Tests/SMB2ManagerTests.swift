@@ -578,6 +578,22 @@ class SMB2ManagerTests: XCTestCase {
         try await smb.write(data: Data(), toPath: "removeTest/file", progress: nil)
         try await smb.removeDirectory(atPath: "removeTest", recursive: true)
     }
+  
+  
+  func testPrecompositedStringHanle() async throws {
+    let smb = SMB2Manager(url: server, credential: credential)!
+    try await smb.connectShare(name: share, encrypted: encrypted)
+    let fileAttr = try await smb.attributesOfItem(atPath: "/SƠN TÙNG M-TP - ĐỪNG LÀM TRÁI TIM ANH ĐAU - OFFICIAL MUSIC VIDEO/SƠN TÙNG M-TP - ĐỪNG LÀM TRÁI TIM ANH ĐAU - OFFICIAL MUSIC VIDEO.mp4")
+    XCTAssertFalse(fileAttr.isEmpty)
+    XCTAssertGreaterThan(fileAttr[.fileSizeKey] as! Int64, 0)
+  }
+  
+  func testPrecompositedStringHanleAttribues() async throws {
+    let smb = SMB2Manager(url: server, credential: credential)!
+    try await smb.connectShare(name: share, encrypted: encrypted)
+    let fileAttrs = try await smb.contentsOfDirectory(atPath: "/SƠN TÙNG M-TP - ĐỪNG LÀM TRÁI TIM ANH ĐAU - OFFICIAL MUSIC VIDEO")
+    XCTAssertFalse(fileAttrs.isEmpty)
+  }
 }
 
 extension SMB2ManagerTests {

@@ -1536,7 +1536,7 @@ extension SMB2Manager {
         -> [[URLResourceKey: Any]]
     {
         var contents = [[URLResourceKey: Any]]()
-        let dir = try SMB2Directory(path.canonical, on: context)
+        let dir = try SMB2Directory(path.canonical.precomposedStringWithCanonicalMapping, on: context)
         for ent in dir {
             let name = String(cString: ent.name)
             if [".", ".."].contains(name) { continue }
